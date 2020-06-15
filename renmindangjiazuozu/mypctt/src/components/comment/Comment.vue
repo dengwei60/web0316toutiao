@@ -47,7 +47,7 @@
         <!-- 当标题是文章评论 -->
         <div class="content-top1" v-show="activeTab === 'article'">
             <!-- 文本框 -->
-            <input type="text" placeholder="请输入内容昂">
+            <input type="text" placeholder="请输入内容...">
             <!--安装vue2-editor -->
             <vue-editor class="richText" v-model="richContent"></vue-editor>
             <!-- 发布的按钮 -->
@@ -270,6 +270,8 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
             .content-top1{
 
                 input {
+                    padding: 10px;
+                    background-color: #ddd;
                     width: 100%;
                     height: 40px;
                     color: #ddd;

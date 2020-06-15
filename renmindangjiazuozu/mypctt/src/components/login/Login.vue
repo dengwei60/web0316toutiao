@@ -2,7 +2,7 @@
 <template>
 <div class='login'>
     <p class="text">登录后可以保存您的浏览喜好、评论、收藏，并与APP同步，更可以发布微头条</p>
-    <div class="btn">登录</div>
+    <div class="btn" @click="gotoUserLogin">登录</div>
     <div class="img">
         <div class="qq">
         <img src="./img/qq.png" alt="">
@@ -30,12 +30,16 @@ return {
 };
 },
 //监听属性 类似于data概念
-computed: {},
+computed: {
+
+},
 //监控data中的数据变化
 watch: {},
 //方法集合
 methods: {
-
+    gotoUserLogin:function(){
+        this.$router.push({name:"userlogin"})
+    }
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
