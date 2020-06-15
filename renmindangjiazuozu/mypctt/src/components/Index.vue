@@ -18,6 +18,7 @@
         <div class="content-middle">
             <!-- 引入中间内容添加评论的栏 -->
             <Comment></Comment>
+            <ShowList></ShowList>
         </div>
         <!-- 内容的右边 -->
         <div class="content-right">
@@ -45,7 +46,8 @@ import SerchInput from '../components/SerchInput/SerchInput'
 import Login from '../components/login/Login'
 //引入评论栏
 import Comment from '../components/comment/Comment'
-
+//引入评论
+import ShowList from '../components/showlist/ShowList'
 
 
 
@@ -57,7 +59,8 @@ components: {
     Nav,
     SerchInput,
     Login,
-    Comment
+    Comment,
+    ShowList
 },
 data() {
 //这里存放数据
@@ -117,12 +120,13 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
             .content-middle {
                 flex: 2;
                 // background-color: rgb(148, 255, 244,.1);
-                border: 1px solid #ddd;
+                // border: 1px solid #ddd;
 
             }
 
             .content-right {
                 flex: 2;
+                padding: 0 20px;
                 // background-color: rgb(150, 250, 78);
 
             }

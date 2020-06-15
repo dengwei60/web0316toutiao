@@ -262,7 +262,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
                         text-align: center;
                         font-size: 16px;
                         background-color: var(--themeColor);
-                        border-radius: 3px;
+                        // border-radius: 3px;
                         color: white;
                     }
                 }
@@ -281,15 +281,15 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
                 }
 
                 .sendbox{
-
+                    margin-top: 3px;
                     width:100%;
                     height: 40px;
                     display: flex;
                     flex-direction: row-reverse;
                     .sendbtn{
-                        height: 40px;
+                        height: 30px;
                         width: 100px;
-                        line-height: 40px;
+                        line-height: 30px;
                         text-align: center;
                         color: white;
                         background-color: var(--themeColor);
