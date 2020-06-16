@@ -21,7 +21,7 @@
           <a href="#">用户协议</a>和
           <a href="#">隐私条款</a>
           </div>
-            <div class="right" @click.stop="goToUserRegister"><a href="#">注册账号</a></div>
+            <div class="right" @click.stop="goToLogin"><a href="#">登录</a></div>
         </div>
     </div>
 </div>
@@ -50,8 +50,8 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-    goToUserRegister:function(){
-        this.$router.push({name:"userRegister"})
+    goToLogin:function(){
+        this.$router.push({name:"userlogin"})
     },
     //确认并添加账号信息
     confirm:function(){
@@ -81,7 +81,7 @@ methods: {
                 //跳转页面
                 // this.$store.commit("updateUserInfo",res.wdata)
                 // 跳转回首页
-                this.$router.push({"name":"userLogin"})
+                this.$router.push({"name":"userlogin"})
             }
         })
         

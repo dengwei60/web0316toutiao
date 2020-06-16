@@ -15,7 +15,7 @@
         <!-- 当标题是微头条的时候 -->
         <div class="content-top" v-show="activeTab === 'toutiao'">
             <!-- 文本输入的开始 -->
-            <textarea class="input" name="" id="" cols="30" rows="10" placeholder="想说什么呢"></textarea>
+            <textarea v-model="ttcontent" class="input" name="" id="" cols="30" rows="10" placeholder="想说什么呢"></textarea>
             <!-- 文本输入的结束 -->
             <!-- 底部的图片上传以及发布评论模块开始 -->
             <div class="bottom">
@@ -40,19 +40,19 @@
                     </div>
                 </div>
                 <!-- 右边 -->
-                <div class="right">发布</div>
+                <div class="right" @click.stop="addTouTiao">发布</div>
             </div>
         <!-- 底部的图片上传以及发布评论模块结束 -->
         </div>
         <!-- 当标题是文章评论 -->
         <div class="content-top1" v-show="activeTab === 'article'">
             <!-- 文本框 -->
-            <input type="text" placeholder="请输入内容...">
+            <input type="text" placeholder="请输入内容..." v-model="articlecontent">
             <!--安装vue2-editor -->
             <vue-editor class="richText" v-model="richContent"></vue-editor>
             <!-- 发布的按钮 -->
             <div class="sendbox">
-                <div class="sendbtn">发布</div>
+                <div class="sendbtn" @click.stop="addArticle">发布</div>
                 </div>
         </div>
     </div>
@@ -79,6 +79,10 @@ components: {
 data() {
 //这里存放数据
 return {
+    //头条的发布内容变量
+    ttcontent:"",
+    //头条文章的内容变量
+    articlecontent:"",
     //评论头部数据
     title:[
         {id:"toutiao",text:"发微头条"},
@@ -100,6 +104,44 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
+    //发布文章的方法绑定
+    addArticle:function(){
+        if(!this.articlecontent || !this.richContent){
+            this.$message({
+                msg:"发表的文章内容不能为空"
+            })
+        }
+        this.$axios.post("/createArticle",{
+            content:this.richContent,
+            img:"",
+            title:this.articlecontent
+        }).then(res => {
+            this.$message({
+                msg:res.msg
+            })
+        })
+    },
+    //发布头条的方法绑定
+    addTouTiao:function(){
+        let content = this.ttcontent
+        //如果头条输入为空的话
+        if(!content){
+            this.$message({
+                msg:"微头条输入内容不能为空"
+            })
+            return;
+        }
+        this.$axios.post("/createTT",{
+            // 参入参数
+            content,
+            imgs:this.uploadImgs.join(",")
+        }).then(res => {
+            this.$message({
+                msg:res.msg
+            })
+
+        })
+    },
     //删除上传图片的方法
     delImg(id){
         this.uploadImgs.splice(id,1)
@@ -177,7 +219,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
                 .input {
                     width: 100%;
                     border: 1px solid #ddd;
-                    color: #ddd;
+                    // color: #ddd;
                     background-color: #f4f5f6;
                 }
                     .bottom {
@@ -274,7 +316,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
                     background-color: #ddd;
                     width: 100%;
                     height: 40px;
-                    color: #ddd;
+                    // color: #ddd;
                     border:none;
                 }
 

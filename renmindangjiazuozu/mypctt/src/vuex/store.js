@@ -13,7 +13,7 @@ const mutations = {
     //这个方法来在本地缓存里面存储用户的数据
     //建立一个方法来存储到当时的登录用户数据
     updateUserInfo:function(state,userInfo){
-        localStorage.setItem("useInfo",JSON.stringify(userInfo))
+        localStorage.setItem("userInfo",JSON.stringify(userInfo))
         state.userInfo = userInfo
     }
     

@@ -10,6 +10,8 @@ import Index from '../components/Index'
 import UserLogin from "../components/login/UserLogin.vue"
 //配置注册的界面路由
 import UserRegister from "../components/login/UserRegister.vue"
+//配置跳转到文章详情的路由
+import ListDetail from '../components/showlist/ListDetail.vue'
 
 //配置路由
 let roter = [{
@@ -24,7 +26,12 @@ let roter = [{
     path:'/userRegister',
     name:"userRegister",
     component:UserRegister
-}]
+},{
+    path:'/listDetail',
+    name:"listDetail",
+    component:ListDetail
+}
+]
 //导出实例,构造函数内属性不可写错.
 export default new VueRouter({
     routes: roter

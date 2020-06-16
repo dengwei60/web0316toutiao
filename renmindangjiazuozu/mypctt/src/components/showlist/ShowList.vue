@@ -1,31 +1,30 @@
 <!--  -->
 <template>
-<div class="showlist">
+<div class="showList">
     <!-- 上面的点击刷新 -->
-    <div class="showlist-top">点击刷新</div>
+    <div class="showlist-top" @click.stop="refresh">点击刷新</div>
     <!-- 下面的展示列表 -->
-    <div class="showList-item">
-        <div class="left">
+    <div class="showList-item" v-for="item,index in article" :key="item.nid"
+    @click.stop="gotodetail(item.nid)">
+        <div class="left" v-if="item.img">
             <!-- 左边大图 -->
-            <img src="http://wlanya.oss-cn-shenzhen.aliyuncs.com/2020_06_11/1c872634-9527-7d84-5da2-a72e5911078b.jpg" alt="">
+            <img :src="item.img" alt="">
         </div>
         <div class="right">
             <!-- 右边的标题 -->
-            <div class="right-title">删除文章</div>
+            <div class="right-title">{{item.title}}</div>
             <!-- 右边的内容 -->
             <div class="right-content">
                 <!-- 右边的图像 -->
-                <img src="http://sf1-ttcdn-tos.pstatp.com/img/pgc-image/f6cc8e95467f44e3bcdcf9d4ca0a58f6~120x256.image" alt="">
+                <img :src="item.user.avator" alt="">
                 <!-- 右边的名字 -->
-                <div class="right-content-name">无为尔默</div>
+                <div class="right-content-name">{{item.user.nickname}}</div>
                 <!-- 右边的时间 -->
             </div>
-            <div class="right-content-data">2020-06-12 11:30:51</div>            
+            <div class="right-content-data">{{item.created_at}}</div>            
         </div>
     </div>
     
-    
-
 </div>
 </template>
 
@@ -39,7 +38,8 @@ components: {},
 data() {
 //这里存放数据
 return {
-
+    lastid:0,//最新一条咨询的id
+    article:[],//文章列表
 };
 },
 //监听属性 类似于data概念
@@ -48,7 +48,33 @@ computed: {},
 watch: {},
 //方法集合
 methods: {
-
+    //跳转到详情页的方法
+    gotodetail:function(id){
+        //这里要传一个参数所以要用到传参的写法
+        this.$router.push(
+            {
+                //配置路由的hash
+                path:"/listDetail",
+                //传入参数
+                query:{
+                    nid:id
+                }
+                })
+    },
+// 刷新的数据
+refresh:function(){
+    this.$axios.post("/getArticles",{
+        lastid:this.lastid
+    }).then(res => {
+        console.log(res)
+        // 加最新的数据拼接到现有的数据上,通过数组concat方法
+        this.article = (res.articles || []).concat(this.article)
+        if(this.article.length > 0){
+            //获取最后一条文章或头条的id
+            this.lastid = this.article[0].nid
+        }
+    })
+}
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
@@ -56,6 +82,20 @@ created() {
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
+    //挂载完成的时候
+    this.$axios.post("/getArticles",{lastid:this.lastid})
+    .then(res => {
+        console.log(res);
+        //结果里面获取文章的数组
+        this.article = res.articles || []
+        if(this.article.length > 0){
+            //获取最后一条文章的id
+            this.lastid = this.article[0].nid
+        }
+    })
+    .catch(err => {
+        console.error(err); 
+    })
 
 },
 beforeCreate() {}, //生命周期 - 创建之前
@@ -68,7 +108,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style lang='less' scoped>
-.showlist {
+.showList {
   .showlist-top {
       width: 100%;
       height: 30px;
