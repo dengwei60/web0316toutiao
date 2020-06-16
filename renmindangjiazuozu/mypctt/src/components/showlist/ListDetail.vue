@@ -7,7 +7,7 @@
     <div class="artdetail">
         <h1 class="titile">{{article.title}}</h1>
         <div class="content">
-            <span class="name">{{article.n_user.nickname}}</span>
+            <span class="name">{{name}}</span>
             <span class="time">{{article.created_at}}</span>
         </div>
         <div class="detaile" v-html="article.content"></div>
@@ -27,6 +27,8 @@ data() {
 return {
     //设定一个可以渲染的文章信息变量
     article:{},
+    //姓名变量
+    name:""
 
 };
 },
@@ -57,6 +59,7 @@ mounted() {
         console.log(res)
         //拿到这个请求后将结果赋值给this.article
         this.article = res.article
+        this.name = res.article.n_user.nickname
     })
 
 
@@ -73,7 +76,9 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 <style lang='less' scoped>
 .detail {
     position: relative;
-    background-color: red;
+    width: 100vw;
+    height: 100vh;
+    background-color: #dddddd;
   .lefttop {
       position: absolute;
       left: 30px;
@@ -87,23 +92,26 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
       position: absolute;
       left: 300px;
       top: 100px;
-      background-color: white;
-    h1.titile {
-
+    //   background-color:white;
+    .titile {
+        margin: 30px 0;
+        border-bottom: 1px solid black;
     }
 
     .content {
+        display: flex;
       .name {
-
+          margin: 0 20px;
       }
 
       .time {
+          margin: 0 20px;
 
       }
     }
 
     .detaile {
-
+        margin: 20px;
     }
   }
 }
