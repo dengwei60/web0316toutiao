@@ -111,12 +111,14 @@ methods: {
         })
         .then(res => {
             console.log(res)
+            //不正确继续改
             if(res.msg === '当前密码不对'){
                 this.$message({
                     msg:res.msg
                 })
                 return;
             }else{
+                //正确就跳转到渲染得主页
                 this.$message({
                     msg:res.msg
                 })
