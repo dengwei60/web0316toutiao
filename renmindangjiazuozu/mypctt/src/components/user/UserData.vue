@@ -11,7 +11,7 @@
     <!-- 下面的内容展示 -->
     <div class="content">
         <!-- 如果是账户名则显示下面内容 -->
-        <div class="name">
+        <div class="name" v-if="title === 'name'">
             <div class="updatauser">
                 <!-- 顶部内容 -->
                 <div class="top">
@@ -31,6 +31,23 @@
                 <div class="bottom" @click.stop="updatauser">更新资料</div>
             </div>
         </div>
+        <!-- 如果显示的是账号密码 -->
+        <div class="password" v-if="title === 'password'">
+            <div class="updatapwd">
+                <!-- 当前密码部分 -->
+                <div class="cutpwd">
+                    <div class="text">当前密码</div>
+                    <input type="password" v-model="oldpwd">
+                </div>
+                <!-- 新密码部分 -->
+                <div class="newpwd">
+                    <div class="text">新密码</div>
+                    <input type="password" v-model="newpwd">
+                </div>
+                <!-- 修改栏 -->
+                <div class="changepwd" @click.stop="changepwd">提交修改</div>
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -45,8 +62,12 @@ components: {},
 data() {
 //这里存放数据
 return {
+    //用户信息变量
     nickname:this.$store.state.userInfo.nickname,
     updataimg:this.$store.state.userInfo.avator,
+    //用户密码变量
+    oldpwd:"",
+    newpwd:"",
 //标题初始化名
 title:"name",
 //标题的切换项变量
@@ -72,15 +93,72 @@ computed: {
 watch: {},
 //方法集合
 methods: {
+    //修改密码并上传密码
+    changepwd:function(e){
+        // 获取不到密码
+        // console.log(e)
+        if(!this.oldpwd || !this.newpwd){
+            this.$message({
+                msg:"请输入正确的密码"
+            })
+            return
+        }
+        // this.$router.push({path:"/userData"})
+        //发送密码请求
+        this.$axios.post("/updatePassword",{
+            currentPassword:this.oldpwd,
+            updatePassword:this.newpwd
+        })
+        .then(res => {
+            console.log(res)
+            if(res.msg === '当前密码不对'){
+                this.$message({
+                    msg:res.msg
+                })
+                return;
+            }else{
+                this.$message({
+                    msg:res.msg
+                })
+                setTimeout(() => {   
+                    this.$router.push({path:"/"})
+                }, 3000);
+            }
+        })
+        .catch(err => {
+            console.error(err); 
+        })
+
+    },
     //用户名确认修改上传
     updatauser:function(){
         if(!this.nickname){
             this.$message({
                 msg:"请输入正确用户名"
             })
-            return
+            return;
         }
-
+        //发送参数到后台请求修改参数
+        this.$axios.post("/updateUserInfo",{
+            nickname:this.nickname,
+            avator:this.updataimg
+        })
+        .then(res => {
+            console.log(res)
+            this.$message({
+                msg:res.msg
+            })
+            //传参拿到结果后渲染并覆盖存储到本地缓存的数据中
+             let userInfo = this.$store.state.userInfo
+             userInfo.nickname = this.nickname
+             userInfo.avator = this.updataimg
+             //将数据传入vuex
+             console.log(userInfo)
+             this.$store.commit("updateUserInfo",userInfo)
+        })
+        .catch(err => {
+            console.error(err); 
+        })
     },
     //标题切换的方法
     changetitle(id){
@@ -220,6 +298,65 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
       }
     }
   }
+  .password {
+  .updatapwd {
+      padding: 20px;
+    .cutpwd {
+        display: flex;
+        margin-bottom: 5px;
+      .text {
+          flex: 1;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          font-size: 20px;
+          font-weight: 300;
+          color: #46a0fc;
+
+      }
+
+      input {
+          flex: 9;
+          height: 30px;
+          width: 100%;
+          border: 1px solid #dddddd;
+      }
+    }
+
+    .newpwd {
+         display: flex;
+        margin-bottom: 5px;
+      .text {
+          flex: 1;
+          height: 30px;
+          line-height: 30px;
+          text-align: center;
+          font-size: 20px;
+          font-weight: 300;
+          color: #46a0fc;
+      }
+
+      input {
+          flex: 9;
+          height: 30px;
+          width: 100%;
+          border: 1px solid #dddddd;
+      }
+    }
+
+    .changepwd {
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        width: 100px;
+        background-color: #46a0fc;
+        color: white;
+        font-size: 16px;
+        margin-left: 110px;
+        border-radius: 5px;
+    }
+  }
+}
 }
 }
 </style>
