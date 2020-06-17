@@ -18,7 +18,7 @@
 <!-- 登录有账号的情况-->
 <div v-else class="tt-index-login">
       <div class="logout" @click="logout">退出登陆</div>
-      <div class="imagerWrapper">
+      <div class="imagerWrapper" @click.stop="goToUserCenter">
         <img :src="userInfo.avator" alt />
       </div>
       <div class="nickname">{{userInfo.nickname}}</div>
@@ -59,6 +59,11 @@ userInfo:function(){
 watch: {},
 //方法集合
 methods: {
+    //用户中心路由
+    goToUserCenter:function(){
+      this.$router.push({name:"userCenter"})
+    },
+    //用户登录路由
     gotoUserLogin:function(){
         this.$router.push({name:"userlogin"})
     },
