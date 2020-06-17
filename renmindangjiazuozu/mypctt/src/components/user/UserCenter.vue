@@ -96,6 +96,12 @@ computed: {
 watch: {},
 //方法集合
 methods: {
+    //跳转到用户数据界面
+    goTotoUserData:function(){
+        //通过路由传参数?
+
+    this.$router.push({name:"userData"})
+    },
     //点击切换头部标题导航的方法
     changeTab(id){
         this.activetab = id

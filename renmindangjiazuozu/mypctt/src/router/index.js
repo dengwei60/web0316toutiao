@@ -14,6 +14,8 @@
     import ListDetail from '../components/showlist/ListDetail.vue'
     //跳转到用户中心页面
     import UserCenter from '../components/user/UserCenter.vue'
+    //跳转到用户数据界面
+    import UserData from '../components/user/UserData.vue'
 
 
     //配置路由
@@ -37,6 +39,11 @@
         path:'/userCenter',
         name:"userCenter",
         component:UserCenter
+    },
+    {
+        path:'/userData',
+        name:"userData",
+        component:UserData
     },
     ]
     //导出实例,构造函数内属性不可写错.
