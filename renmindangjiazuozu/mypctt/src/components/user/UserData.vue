@@ -98,6 +98,7 @@ methods: {
         // 获取不到密码
         // console.log(e)
         if(!this.oldpwd || !this.newpwd){
+            console.log("123ß")
             this.$message({
                 msg:"请输入正确的密码"
             })
@@ -110,9 +111,9 @@ methods: {
             updatePassword:this.newpwd
         })
         .then(res => {
-            console.log(res)
+            console.log(res.msg)
             //不正确继续改
-            if(res.msg === '当前密码不对'){
+            if(res.msg === '当前密码不对' || res.msg === "登录验证失败，请重新登录"){
                 this.$message({
                     msg:res.msg
                 })

@@ -93,8 +93,9 @@ refresh:function(){
         }
     }).catch( err => {
         this.onLoading = false
-    })
-}
+        })
+        console.log(this.onLoading)
+    },
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
