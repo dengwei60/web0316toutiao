@@ -118,7 +118,13 @@ methods: {
         }).then(res => {
             this.$message({
                 msg:res.msg
+                
             })
+             let userInfo = this.$store.state.userInfo
+            //文章数自增
+            userInfo.article_count++
+            //更新veux里面的数据
+            this.$store.commit("updateUserInfo",userInfo)
         })
     },
     //发布头条的方法绑定
@@ -139,6 +145,11 @@ methods: {
             this.$message({
                 msg:res.msg
             })
+            let userInfo = this.$store.state.userInfo
+            //头条数自增
+            userInfo.tt_count++
+            //更新veux里面的数据
+            this.$store.commit("updateUserInfo",userInfo)
 
         })
     },

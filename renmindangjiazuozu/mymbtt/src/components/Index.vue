@@ -101,7 +101,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
             justify-content: space-between;
             align-items: center;
             padding: 1rem;
-            height: 2.5rem;
+            height: 4rem;
             background-color: var(--themeColor);
             font-weight: 300;
             color: white;
@@ -158,9 +158,9 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
         }
         //内容
         .content {
-            overflow: hidden;
-            overflow-x: hidden;
-            overflow-y: scroll;
+            // overflow: hidden;
+            // overflow-x: hidden;
+            // overflow-y: scroll;
             .content-item {
                 height: 5rem;
                 padding: 1rem;
@@ -178,8 +178,8 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
                 }
             }
         }
-        .content::-webkit-scrollbar{
-            display: none;
-        }
+        // .content::-webkit-scrollbar{
+        //     display: none;
+        // }
     }
 </style>

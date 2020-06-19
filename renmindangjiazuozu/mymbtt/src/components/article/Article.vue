@@ -1,8 +1,15 @@
 <!--  -->
 <template>
 <div class='article'>
-    <h1>{{article.title}}</h1>
-    <div v-html="article.content"></div>
+    <!-- 头部的导航条 -->
+    <div class="nav">
+        <div class="left">
+            <img src="./img/toutiao.png" alt="">
+        </div>
+        <div class="right">打开</div>
+    </div>
+    <h1 class="title">{{article.title}}</h1>
+    <div class="content" v-html="article.content"></div>
 </div>
 </template>
 
@@ -53,5 +60,56 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style lang='less' scoped>
+
+    .article {
+        // position: relative;
+        .nav {
+            // position: fixed;
+            // top: 0;
+            // left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // background-color: tomato;
+            padding: 0.5rem;
+            height: 5rem;
+            box-shadow: 2px 2px 2px 2px #dddddd;
+            .left {
+                width: 5rem;
+                height: 5rem;
+                line-height: 6rem;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .right {
+                font-size: 1.6rem;
+                color: white;
+                width: 5rem;
+                height: 3rem;
+                background-color: red;
+                line-height: 3rem;
+                text-align: center;
+                border-radius: 1.5rem;
+            }
+        }
+
+        .title {
+            font-weight: 300;
+            padding: 2rem;
+            // margin-bottom: 2rem;
+        }
+
+        .content {
+            padding: 2rem;
+            // position: absolute;
+            // top:6rem;
+            // left: 0%;
+
+        }
+    }
+
 
 </style>
